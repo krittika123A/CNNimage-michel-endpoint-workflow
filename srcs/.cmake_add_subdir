@@ -1,0 +1,4 @@
+# DO NOT DELETE 
+# larrecodnn
+mrb_add_subdirectory(larrecodnn)
+mrb_process_checkpoints()

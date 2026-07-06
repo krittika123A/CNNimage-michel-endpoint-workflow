@@ -1,0 +1,4 @@
+# DO NOT DELETE 
+# larrecodnn package block
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/larrecodnn)
+include_directories($ENV{MRB_BUILDDIR}/larrecodnn)

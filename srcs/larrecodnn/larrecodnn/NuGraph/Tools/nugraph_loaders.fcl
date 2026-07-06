@@ -1,0 +1,9 @@
+BEGIN_PROLOG
+
+StandardLoader: {
+   hitInput: "nuslhits"
+   spsInput: "sps"
+   tool_type: "StandardLoader"
+}
+
+END_PROLOG

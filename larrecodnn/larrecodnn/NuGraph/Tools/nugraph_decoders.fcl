@@ -1,0 +1,24 @@
+BEGIN_PROLOG
+
+FilterDecoderTool: {
+    instanceName: "filter"
+    outputName: "x_filter_"
+    hitInput: @nil
+    tool_type: "FilterDecoder"
+}
+
+SemanticDecoderTool: {
+    instanceName: "semantic"
+    outputName: "x_semantic_"
+    categories: ["MIP", "HIP", "shower", "michel", "diffuse"]
+    hitInput: @nil
+    tool_type: "SemanticDecoder"
+}
+
+VertexDecoderTool: {
+    instanceName: "vertex"
+    outputDictElem: "x_vertex"
+    tool_type: "VertexDecoder"
+}
+
+END_PROLOG

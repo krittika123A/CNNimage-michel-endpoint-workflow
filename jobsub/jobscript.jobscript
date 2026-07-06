@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# FCL file and DUNE software version/qualifier to be used
+FCL_FILE=${FCL_FILE:-$INPUT_TAR_DIR_LOCAL/PointIdTrackEndpointDump.fcl}
+DUNE_VERSION=${DUNE_VERSION:-v10_20_03d00}
+DUNE_QUALIFIER=${DUNE_QUALIFIER:-e26:prof}
+
+# Make sure that we're not beeing greedy with resources...
+if [ -z ${JUSTIN_PROCESSORS} ]; then
+ JUSTIN_PROCESSORS=1
+fi
+
+echo "Justin processors: ${JUSTIN_PROCESSORS}"
+
+export TF_NUM_THREADS=${JUSTIN_PROCESSORS}
+export OPENBLAS_NUM_THREADS=${JUSTIN_PROCESSORS}
+export JULIA_NUM_THREADS=${JUSTIN_PROCESSORS}
+export MKL_NUM_THREADS=${JUSTIN_PROCESSORS}
+export NUMEXPR_NUM_THREADS=${JUSTIN_PROCESSORS}
+export OMP_NUM_THREADS=${JUSTIN_PROCESSORS}
+
+# setup the DUNE environment
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+source $INPUT_TAR_DIR_LOCAL/setup-grid
+setup dunesw "$DUNE_VERSION" -q "$DUNE_QUALIFIER"
+mrbslp
+
+export FW_SEARCH_PATH=.:${INPUT_TAR_DIR_LOCAL}:$FW_SEARCH_PATH
+export FHICL_FILE_PATH=.:${INPUT_TAR_DIR_LOCAL}:$FHICL_FILE_PATH
+
+# Number of events to process from the input file.
+# Codex change 2026-07-03: if NUM_EVENTS is unset, events_option remains empty,
+# so lar runs over all events in the input file. The old short test passed
+# NUM_EVENTS=100, which made this block add lar -n 100.
+# number of events to process from the input file
+if [ "$NUM_EVENTS" != "" ] ; then
+ events_option="-n $NUM_EVENTS"
+fi
+
+# First get an unprocessed file from this stage
+did_pfn_rse=`$JUSTIN_PATH/justin-get-file`
+
+if [ "$did_pfn_rse" = "" ] ; then
+  echo "Nothing to process - exit jobscript"
+  exit 0
+fi
+
+# Keep a record of all input DIDs, for pdjson2meta file -> DID mapping
+echo "$did_pfn_rse" | cut -f1 -d' ' >>all-input-dids.txt
+
+# pfn is also needed when creating justin-processed-pfns.txt
+pfn=`echo $did_pfn_rse | cut -f2 -d' '`
+echo "Input PFN = $pfn"
+
+# Construct outFile from input $pfn 
+now=$(date -u +"%Y-%m-%dT_%H%M%SZ")
+Ffname=`echo $pfn | awk -F/ '{print $NF}'`
+fname=`echo $Ffname | awk -F. '{print $1}'`
+
+campaign="justIN.w${JUSTIN_WORKFLOW_ID}s${JUSTIN_STAGE_ID}"
+
+# Here is where the LArSoft command is call it 
+(
+# Do the scary preload stuff in a subshell!
+export LD_PRELOAD=${XROOTD_LIB}/libXrdPosixPreload.so
+
+lar -c $FCL_FILE $events_option "$pfn" > ${fname}_reco_${now}.log 2>&1
+)
+
+# Subshell exits with exit code of last command
+larExit=$?
+echo "lar exit code $larExit"
+
+echo '=== Start last 100 lines of lar log file ==='
+tail -100 ${fname}_reco_${now}.log
+echo '=== End last 100 lines of lar log file ==='
+
+#mv ShowerMatchingTraining.root ShowerMatchingTraining_${fname}.root
+if [ -f reco_hist.root ] ; then
+  mv reco_hist.root reco_hist_${fname}.root
+fi
+
+if [ $larExit -eq 0 ] ; then
+  # Success !
+  echo "$pfn" > justin-processed-pfns.txt
+  jobscriptExit=0
+else
+  # Oh :(
+  jobscriptExit=1
+fi
+
+# Create compressed tar file with all log files 
+tar zcf `echo "$JUSTIN_JOBSUB_ID.logs.tgz" | sed 's/@/_/g'` *.log
+exit $jobscriptExit

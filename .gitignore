@@ -1,0 +1,28 @@
+# Large detector/data outputs
+*.root
+*.npy
+*.npz
+*.h5
+
+# Build and local product directories
+build*/
+build_*/
+localProducts_*/
+srcs/.locks/
+.locks/
+
+# Python/cache outputs
+__pycache__/
+*.py[cod]
+
+# Logs, archives, and batch outputs
+*.log
+*.tgz
+*.tar
+*.tar.gz
+jobsub/001/
+jobsub/*-dunegpschedd*.gov/
+jobsub/-C
+
+# Local export directory, if this repo is copied back into the source tree
+CNNimage_github_export/

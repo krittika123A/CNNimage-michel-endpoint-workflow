@@ -1,0 +1,866 @@
+# Produced from 'fhicl-dump' using:
+#   Input  : example_dataprep_job.fcl
+#   Policy : cet::filepath_maker
+#   Path   : "FHICL_FILE_PATH"
+
+physics: {  # ./example_dataprep_job.fcl:31
+   anadata: [  # ./example_dataprep_job.fcl:38
+      "datadump"  # ./example_dataprep_job.fcl:38
+   ]
+   analyzers: {  # ./example_dataprep_job.fcl:33
+      datadump: {  # ./example_dataprep_job.fcl:35
+         CleanTrk: 5  # ./example_dataprep_job.fcl:88
+         Crop: true  # ./example_dataprep_job.fcl:60
+         DumpToNumpy: true  # ./example_dataprep_job.fcl:77
+         DumpToRoot: true  # ./example_dataprep_job.fcl:61
+         Em: 1  # ./example_dataprep_job.fcl:83
+         Michel: 3  # ./example_dataprep_job.fcl:85
+         None: 0  # ./example_dataprep_job.fcl:86
+         OutNumpyFileName: "cnn_output"  # ./example_dataprep_job.fcl:78
+         OutTextFilePath: "/home/your_path/to_files"  # ./example_dataprep_job.fcl:59
+         Patch_size_d: 32  # ./example_dataprep_job.fcl:81
+         Patch_size_w: 32  # ./example_dataprep_job.fcl:80
+         SelectedTPC: [  # ./example_dataprep_job.fcl:54
+            2  # ./example_dataprep_job.fcl:54
+         ]
+         SelectedView: [  # ./example_dataprep_job.fcl:55
+            2  # ./example_dataprep_job.fcl:55
+         ]
+         StopTrk: 4  # ./example_dataprep_job.fcl:87
+         TrainingDataAlg: {  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/imagepatternalgs.fcl:16
+            AdcDelayTicks: 0  # ./example_dataprep_job.fcl:49
+            AdcMax: 150  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:25
+            AdcMin: -50  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:26
+            BlurKernel: [  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:14
+            ]
+            CalibrateAmpl: true  # ./example_dataprep_job.fcl:67
+            CalibrateLifetime: true  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:20
+            CalorimetryAlg: {  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:18
+               CalAmpConstants: [  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:14
+                  5.88726e-4,  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:14
+                  1.18998e-3  # ""
+               ]
+               CalAreaConstants: [  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:15
+                  7.73887e-3,  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:15
+                  1.78186e-2  # ""
+               ]
+               CaloDoLifeTimeCorrection: true  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:18
+               CaloLifeTimeForm: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:17
+               CaloUseModBox: true  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/calorimetry.fcl:16
+            }
+            CoherentSigma: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:16
+            DownscaleFn: "mean"  # ./example_dataprep_job.fcl:50
+            DownscaleFullView: true  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:8
+            DriftWindow: 6  # ./example_dataprep_job.fcl:48
+            HitLabel: ""  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/pointidalg.fcl:18
+            NoiseSigma: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:15
+            OutMax: 15  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:27
+            OutMin: -5  # /cvmfs/larsoft.opensciencegrid.org/products/larreco/v10_06_02/job/dataprovider.fcl:28
+            SaveVtxFlags: true  # ./example_dataprep_job.fcl:47
+            SimChannelLabel: ""  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/pointidalg.fcl:16
+            SimulationLabel: "largeant"  # ./example_dataprep_job.fcl:46
+            TrackLabel: ""  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/pointidalg.fcl:19
+            WireLabel: "caldata"  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/pointidalg.fcl:14
+         }
+         Trk: 2  # ./example_dataprep_job.fcl:84
+         module_type: "PointIdTrainingData"  # /cvmfs/larsoft.opensciencegrid.org/products/larrecodnn/v10_03_02/job/imagepatternalgs.fcl:7
+      }
+   }
+   end_paths: [  # ./example_dataprep_job.fcl:41
+      "anadata"  # ./example_dataprep_job.fcl:41
+   ]
+   trigger_paths: [  # ./example_dataprep_job.fcl:40
+   ]
+}
+process_name: "DataDump"  # ./example_dataprep_job.fcl:11
+services: {  # ./example_dataprep_job.fcl:14
+   AuxDetGeometry: {  # ./example_dataprep_job.fcl:21
+      GDML: "protodune_v7.gdml"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:438
+      Name: "protodunev7"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:437
+      SortingParameters: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:47
+         tool_type: "AuxDetGeoObjectSorterYZX"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:47
+      }
+   }
+   ChannelStatusService: {  # ./example_dataprep_job.fcl:21
+      BadChannels: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/channelstatus_dune.fcl:1043
+      ]
+      NoisyChannels: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/channelstatus_dune.fcl:1047
+      ]
+      service_provider: "SimpleChannelStatusService"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/channelstatus_dune.fcl:1040
+   }
+   DatabaseUtil: {  # ./example_dataprep_job.fcl:21
+      DBHostName: "fnalpgsdev.fnal.gov"  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/databaseutil.fcl:5
+      DBName: "dune_dev"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:7
+      DBUser: "dune_reader"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:8
+      PassFileName: ".lpswd"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:10
+      Port: 5438  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:9
+      ShouldConnect: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:11
+      TableName: "main_run"  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/databaseutil.fcl:12
+      ToughErrorTreatment: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/databaseutil_dune.fcl:12
+   }
+   DetectorClocksService: {  # ./example_dataprep_job.fcl:21
+      ClockSpeedExternal: 3.125e1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorclocks.fcl:16
+      ClockSpeedOptical: 150  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:59
+      ClockSpeedTPC: 2  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:58
+      ClockSpeedTrigger: 16  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:60
+      DefaultBeamTime: 250  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:62
+      DefaultTrigTime: 250  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:61
+      FramePeriod: 1600  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:57
+      G4RefTime: -250  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:55
+      InheritClockConfig: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:54
+      TrigModuleName: ""  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorclocks.fcl:8
+      TriggerOffsetTPC: -250  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorclocks_dune.fcl:56
+      service_provider: "DetectorClocksServiceStandard"  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorclocks.fcl:6
+   }
+   DetectorPropertiesService: {  # ./example_dataprep_job.fcl:21
+      DriftVelFudgeFactor: 1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:18
+      Efield: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:88
+         4.867e-1,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:88
+         6.66e-1,  # ""
+         8e-1  # ""
+      ]
+      Electronlifetime: 35000  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:87
+      ElectronsToADC: 6.8906513e-3  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:89
+      IncludeInterPlanePitchInXTickOffsets: true  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:26
+      NumberTimeSamples: 6000  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:90
+      ReadOutWindowSize: 6000  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:91
+      SimpleBoundaryProcess: true  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:35
+      SternheimerA: 1.956e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:12
+      SternheimerCbar: 5.2146  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:16
+      SternheimerK: 3  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:13
+      SternheimerX0: 2e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:14
+      SternheimerX1: 3  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:15
+      Temperature: 8.768e1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:86
+      TimeOffsetU: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:92
+      TimeOffsetV: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:93
+      TimeOffsetZ: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/detectorproperties_dune.fcl:94
+      UseIcarusMicrobooneDriftModel: false  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:20
+      service_provider: "DetectorPropertiesServiceStandard"  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/detectorproperties.fcl:5
+   }
+   FileCatalogMetadata: {  # ./example_dataprep_job.fcl:20
+      applicationFamily: "art"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/sam_dune.fcl:9
+      applicationVersion: "development"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/sam_dune.fcl:10
+      fileType: "mc"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/sam_dune.fcl:17
+      group: "dune"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/sam_dune.fcl:11
+      runType: "physics"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/sam_dune.fcl:12
+   }
+   Geometry: {  # ./example_dataprep_job.fcl:21
+      GDML: "protodune_v7.gdml"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:435
+      Name: "protodunev7"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:434
+      SortingParameters: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:42
+         tool_type: "GeoObjectSorterAPA"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:42
+      }
+      SurfaceY: 147828  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:43
+   }
+   GeometryConfigurationWriter: {  # ./example_dataprep_job.fcl:21
+   }
+   LArFFT: {  # ""
+      FFTOption: ""  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/larfft.fcl:6
+      FFTSize: 0  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/larfft.fcl:5
+      FitBins: 5  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/larfft_dune.fcl:7
+   }
+   LArG4Parameters: {  # ./example_dataprep_job.fcl:21
+      CosmogenicK0Bias: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:22
+      CosmogenicXSMNBiasFactor: 1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:24
+      CosmogenicXSMNBiasOn: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:23
+      DisableWireplanes: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:25
+      ElectronClusterSize: 600  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:18
+      EllipsModBoxA: 9.04e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:51
+      EllipsModBoxB: 2.04e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:52
+      EllipsModBoxR: 1.25  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:53
+      EnabledPhysics: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:106
+         "Em",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:106
+         "FastOptical",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:107
+         "SynchrotronAndGN",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:108
+         "Ion",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:109
+         "Hadron",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:110
+         "Decay",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:111
+         "HadronElastic",  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:112
+         "Stopping"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:113
+      ]
+      KeepEMShowerDaughters: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:15
+      LarqlAlpha: 3.72e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:63
+      LarqlBeta: 1.24e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:64
+      LarqlChi0A: 3.38427e-3  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:59
+      LarqlChi0B: -6.57037  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:60
+      LarqlChi0C: 1.88418  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:61
+      LarqlChi0D: 1.29379e-4  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:62
+      LongitudinalDiffusion: 6.2e-9  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:16
+      MinNumberOfElCluster: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:19
+      ModBoxA: 9.3e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:44
+      ModBoxB: 2.12e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:45
+      ModifyProtonCut: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:13
+      NewProtonCut: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:14
+      OpticalParamModels: [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:84
+         "OverlaidWireplanes"  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:84
+      ]
+      OpticalParamOrientations: [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:88
+         0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:88
+      ]
+      OpticalParamParameters: [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:97
+         [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:97
+            [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:97
+               60,  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:97
+               3,  # ""
+               1.5e-1  # ""
+            ],
+            [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:98
+               -60,  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:98
+               3,  # ""
+               1.5e-1  # ""
+            ],
+            [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:99
+               0,  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:99
+               3,  # ""
+               1.5e-1  # ""
+            ]
+         ],
+      ]
+      OpticalParamVolumes: [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:81
+         "volTPCPlaneVert_PV"  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:81
+      ]
+      OpticalSimVerbosity: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:7
+      ParticleKineticEnergyCut: 1e-5  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:8
+      QAlpha: 4.3e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:71
+      QProton: 1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:67
+      RecombA: 8e-1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:37
+      Recombk: 4.86e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:38
+      SkipWireSignalInTPCs: [  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:26
+      ]
+      StoreTrajectories: true  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:9
+      TransverseDiffusion: 1.63e-8  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:17
+      UseCustomPhysics: true  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:105
+      UseEllipsModBoxRecomb: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:28
+      UseLitePhotons: true  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/simulationservices_dune.fcl:33
+      UseModBoxRecomb: true  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:27
+      UseModLarqlRecomb: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:29
+      VisualizationEnergyCut: 1e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:10
+      VisualizeNeutrals: false  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:11
+      Wph: 1.95e1  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:75
+   }
+   LArPropertiesService: {  # ./example_dataprep_job.fcl:21
+      AbsLengthEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:60
+         4,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:60
+         5,  # ""
+         6,  # ""
+         7,  # ""
+         8,  # ""
+         9,  # ""
+         10,  # ""
+         11  # ""
+      ]
+      AbsLengthSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:61
+         8000,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:61
+         8000,  # ""
+         8000,  # ""
+         8000,  # ""
+         8000,  # ""
+         2000,  # ""
+         2000,  # ""
+         2000  # ""
+      ]
+      AlphaScintYield: 16800  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:51
+      AlphaScintYieldRatio: 5.6e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:52
+      Argon39DecayRate: 0  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:17
+      AtomicMass: 3.9948e1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:10
+      AtomicNumber: 18  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:9
+      ElectronScintYield: 20000  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:45
+      ElectronScintYieldRatio: 2.7e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:46
+      EnableCerenkovLight: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:104
+      ExcitationEnergy: 188  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:11
+      FastScintEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:21
+         7.2,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:21
+         7.9,  # ""
+         8.3,  # ""
+         8.6,  # ""
+         8.9,  # ""
+         9.1,  # ""
+         9.3,  # ""
+         9.6,  # ""
+         9.7,  # ""
+         9.8,  # ""
+         10,  # ""
+         1.02e1,  # ""
+         1.03e1,  # ""
+         1.06e1,  # ""
+         11,  # ""
+         1.16e1,  # ""
+         1.19e1  # ""
+      ]
+      FastScintSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:23
+         0,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:23
+         4e-2,  # ""
+         1.2e-1,  # ""
+         2.7e-1,  # ""
+         4.4e-1,  # ""
+         6.2e-1,  # ""
+         8e-1,  # ""
+         9.1e-1,  # ""
+         9.2e-1,  # ""
+         8.5e-1,  # ""
+         7e-1,  # ""
+         5e-1,  # ""
+         3.1e-1,  # ""
+         1.3e-1,  # ""
+         4e-2,  # ""
+         1e-2,  # ""
+         0  # ""
+      ]
+      KaonScintYield: 24000  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:47
+      KaonScintYieldRatio: 2.3e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:48
+      LoadExtraMatProperties: true  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/larproperties_dune.fcl:9
+      MuonScintYield: 24000  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:41
+      MuonScintYieldRatio: 2.3e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:42
+      PionScintYield: 24000  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:43
+      PionScintYieldRatio: 2.3e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:44
+      ProtonScintYield: 19200  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:49
+      ProtonScintYieldRatio: 2.9e-1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:50
+      RIndexEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:56
+         1.18626,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:56
+         1.68626,  # ""
+         2.18626,  # ""
+         2.68626,  # ""
+         3.18626,  # ""
+         3.68626,  # ""
+         4.18626,  # ""
+         4.68626,  # ""
+         5.18626,  # ""
+         5.68626,  # ""
+         6.18626,  # ""
+         6.68626,  # ""
+         7.18626,  # ""
+         7.68626,  # ""
+         8.18626,  # ""
+         8.68626,  # ""
+         9.18626,  # ""
+         9.68626,  # ""
+         1.01863e1,  # ""
+         1.06863e1,  # ""
+         1.11863e1  # ""
+      ]
+      RIndexSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:57
+         1.24664,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:57
+         1.2205,  # ""
+         1.22694,  # ""
+         1.22932,  # ""
+         1.23124,  # ""
+         1.23322,  # ""
+         1.23545,  # ""
+         1.23806,  # ""
+         1.24116,  # ""
+         1.24489,  # ""
+         1.24942,  # ""
+         1.25499,  # ""
+         1.26197,  # ""
+         1.2709,  # ""
+         1.28263,  # ""
+         1.29865,  # ""
+         1.32169,  # ""
+         1.35747,  # ""
+         1.42039,  # ""
+         1.56011,  # ""
+         2.16626  # ""
+      ]
+      RadiationLength: 1.955e1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:8
+      RayleighEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:65
+         1.18626,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:65
+         1.68626,  # ""
+         2.18626,  # ""
+         2.68626,  # ""
+         3.18626,  # ""
+         3.68626,  # ""
+         4.18626,  # ""
+         4.68626,  # ""
+         5.18626,  # ""
+         5.68626,  # ""
+         6.18626,  # ""
+         6.68626,  # ""
+         7.18626,  # ""
+         7.68626,  # ""
+         8.18626,  # ""
+         8.68626,  # ""
+         9.18626,  # ""
+         9.68626,  # ""
+         1.01863e1,  # ""
+         1.06863e1,  # ""
+         1.11863e1  # ""
+      ]
+      RayleighSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:66
+         1.2008e6,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:66
+         390747,  # ""
+         128633,  # ""
+         5.49691e4,  # ""
+         2.71918e4,  # ""
+         1.48537e4,  # ""
+         8.7169e3,  # ""
+         5.39742e3,  # ""
+         3.48137e3,  # ""
+         2.31651e3,  # ""
+         1.57763e3,  # ""
+         1.09202e3,  # ""
+         7.63045e2,  # ""
+         5.34232e2,  # ""
+         3.71335e2,  # ""
+         2.52942e2,  # ""
+         1.6538e2,  # ""
+         9.99003e1,  # ""
+         5.12653e1,  # ""
+         1.7495e1,  # ""
+         9.64341e-1  # ""
+      ]
+      ReflectiveSurfaceDiffuseFractions: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:73
+         [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:73
+            5e-1,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:73
+            5e-1,  # ""
+            5e-1  # ""
+         ],
+      ]
+      ReflectiveSurfaceEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:70
+         7,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:70
+         9,  # ""
+         10  # ""
+      ]
+      ReflectiveSurfaceNames: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:71
+         "STEEL_STAINLESS_Fe7Cr2Ni"  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:71
+      ]
+      ReflectiveSurfaceReflectances: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:72
+         [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:72
+            2.5e-1,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:72
+            2.5e-1,  # ""
+            2.5e-1  # ""
+         ],
+      ]
+      ScintBirksConstant: 6.9e-2  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:28
+      ScintByParticleType: false  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:33
+      ScintFastTimeConst: 6  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:26
+      ScintPreScale: 2.87e-2  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:103
+      ScintResolutionScale: 1  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:25
+      ScintSlowTimeConst: 1590  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:27
+      ScintYield: 24000  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/services_protodune_singlephase.fcl:102
+      ScintYieldRatio: 2.3e-1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/larproperties_dune.fcl:16
+      SlowScintEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:22
+         7.2,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:22
+         7.9,  # ""
+         8.3,  # ""
+         8.6,  # ""
+         8.9,  # ""
+         9.1,  # ""
+         9.3,  # ""
+         9.6,  # ""
+         9.7,  # ""
+         9.8,  # ""
+         10,  # ""
+         1.02e1,  # ""
+         1.03e1,  # ""
+         1.06e1,  # ""
+         11,  # ""
+         1.16e1,  # ""
+         1.19e1  # ""
+      ]
+      SlowScintSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:24
+         0,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:24
+         4e-2,  # ""
+         1.2e-1,  # ""
+         2.7e-1,  # ""
+         4.4e-1,  # ""
+         6.2e-1,  # ""
+         8e-1,  # ""
+         9.1e-1,  # ""
+         9.2e-1,  # ""
+         8.5e-1,  # ""
+         7e-1,  # ""
+         5e-1,  # ""
+         3.1e-1,  # ""
+         1.3e-1,  # ""
+         4e-2,  # ""
+         1e-2,  # ""
+         0  # ""
+      ]
+      TpbAbsorptionEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:84
+         5e-2,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:84
+         1.77,  # ""
+         2.0675,  # ""
+         7.42,  # ""
+         7.75,  # ""
+         8.16,  # ""
+         8.73,  # ""
+         9.78,  # ""
+         1.069e1,  # ""
+         5.039e1  # ""
+      ]
+      TpbAbsorptionSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:85
+         100000,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:85
+         100000,  # ""
+         100000,  # ""
+         1e-3,  # ""
+         1e-11,  # ""
+         1e-11,  # ""
+         1e-11,  # ""
+         1e-11,  # ""
+         1e-11,  # ""
+         1e-11  # ""
+      ]
+      TpbEmmisionEnergies: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:82
+         5e-2,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:82
+         1,  # ""
+         1.5,  # ""
+         2.25,  # ""
+         2.481,  # ""
+         2.819,  # ""
+         2.952,  # ""
+         2.988,  # ""
+         3.024,  # ""
+         3.1,  # ""
+         3.14,  # ""
+         3.1807,  # ""
+         3.54,  # ""
+         5.5,  # ""
+         5.039e1  # ""
+      ]
+      TpbEmmisionSpectrum: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:83
+         0,  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:83
+         0,  # ""
+         0,  # ""
+         5.88e-2,  # ""
+         2.35e-1,  # ""
+         8.53e-1,  # ""
+         1,  # ""
+         1,  # ""
+         9.259e-1,  # ""
+         7.04e-1,  # ""
+         2.96e-2,  # ""
+         1.1e-2,  # ""
+         0,  # ""
+         0,  # ""
+         0  # ""
+      ]
+      TpbTimeConstant: 2.5  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:79
+      service_provider: "LArPropertiesServiceStandard"  # /cvmfs/larsoft.opensciencegrid.org/products/lardataalg/v10_02_01/job/larproperties.fcl:5
+   }
+   LArVoxelCalculator: {  # ./example_dataprep_job.fcl:21
+      VoxelEnergyCut: 1e-6  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:122
+      VoxelOffsetT: -2500  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:121
+      VoxelOffsetX: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:118
+      VoxelOffsetY: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:119
+      VoxelOffsetZ: 0  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:120
+      VoxelSizeT: 5000  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:117
+      VoxelSizeX: 3e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:114
+      VoxelSizeY: 3e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:115
+      VoxelSizeZ: 3e-2  # /cvmfs/larsoft.opensciencegrid.org/products/larsim/v10_20_01/job/simulationservices.fcl:116
+   }
+   MagneticField: {  # ./example_dataprep_job.fcl:21
+      FieldDescriptions: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:5
+         {  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:5
+            ConstantField: [  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:7
+               0,  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:7
+               0,  # ""
+               0  # ""
+            ]
+            MagnetizedVolume: "volWorld"  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:8
+            UseField: 0  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:5
+         }
+      ]
+      service_provider: "MagneticFieldServiceStandard"  # /cvmfs/larsoft.opensciencegrid.org/products/lardata/v10_00_16/job/magfield_larsoft.fcl:9
+   }
+   MemoryTracker: {  # ./example_dataprep_job.fcl:16
+   }
+   NuRandomService: {  # ./example_dataprep_job.fcl:21
+      endOfJobSummary: true  # /cvmfs/larsoft.opensciencegrid.org/products/nurandom/v1_11_05/fcl/seedservice.fcl:78
+      policy: "random"  # /cvmfs/larsoft.opensciencegrid.org/products/nurandom/v1_11_05/fcl/seedservice.fcl:71
+   }
+   OpDetResponseInterface: {  # ./example_dataprep_job.fcl:21
+      ChannelConversion: "fast"  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:33
+      FracLong: 7.1e-1  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:27
+      FracShort: 2.9e-1  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:26
+      LambdaLong: 225  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:25
+      LambdaShort: 4.3  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:24
+      LightGuideAttenuation: true  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:19
+      LongAxis: "z"  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:29
+      QuantumEfficiency: 2.87e-3  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:23
+      WavelengthCutHigh: 10000  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:17
+      WavelengthCutLow: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:16
+      service_provider: "DUNEOpDetResponse"  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/opticaldetectorservices_dune.fcl:14
+   }
+   PhotonVisibilityService: {  # ./example_dataprep_job.fcl:21
+      DoNotLoadLibrary: false  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:357
+      LibraryBuildJob: false  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:358
+      LibraryFile: "PhotonPropagation/LibraryData/lib_Protodunev7_merged_avg.root"  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:359
+      NX: 140  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:352
+      NY: 120  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:353
+      NZ: 140  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:354
+      UseCryoBoundary: true  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:356
+      XMax: 120  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:363
+      XMin: -120  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:362
+      YMax: 120  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:365
+      YMin: -120  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:364
+      ZMax: 1200  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:367
+      ZMin: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/duneopdet/v10_20_03d00/fcl/photpropservices_dune.fcl:366
+   }
+   RandomNumberGenerator: {  # ./example_dataprep_job.fcl:18
+   }
+   SignalShapingServiceDUNE: {  # ./example_dataprep_job.fcl:21
+      ADCPerPCAtLowestASICGain: 13160  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:24
+      ASICGainInMVPerFC: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:114
+         14,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:114
+         14,  # ""
+         14  # ""
+      ]
+      CalibResponseTOffset: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:48
+         0,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:48
+         0,  # ""
+         0  # ""
+      ]
+      Col3DCorrection: 2.5  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:41
+      ColFieldParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:91
+         8,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:91
+         16,  # ""
+         7.5e-1  # ""
+      ]
+      ColFieldRespAmp: 1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:43
+      ColFieldShape: "x^[2]/(1.0+(x/[0])^[1])"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:90
+      ColFilter: "(x>0.0)*gaus"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:115
+      ColFilterParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:116
+         1,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:116
+         0,  # ""
+         1e-1  # ""
+      ]
+      DebugFieldShape: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:93
+      DeconNorm: 200  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:23
+      FieldBins: 400  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:38
+      FieldResponseFname: "FieldResponse/dune35t_response_v1.0.root"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:83
+      FieldResponseHistoName: "FieldResponse"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:84
+      FieldResponseTOffset: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:47
+         -32500,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:47
+         -32500,  # ""
+         -32500  # ""
+      ]
+      FilterFunctionFname: "uboone_filters_v0.1.root"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:77
+      FilterHistoName: "noisefilter_%d"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:78
+      GetFilterFromHisto: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:75
+      Ind3DCorrection: 1.5  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:42
+      IndUFieldParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:87
+         8.43e-3,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:87
+         1.534e-1,  # ""
+         1.77,  # ""
+         0,  # ""
+         5e-1  # ""
+      ]
+      IndUFieldRespAmp: 1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:44
+      IndUFieldShape: "[0]*(1.0+[3]*tanh(x-[4]))*([4]-x)*exp(-0.5*((x-[4])/[2])^2.0)"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:86
+      IndUFilter: "(x>0.0)*gaus"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:117
+      IndUFilterParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:118
+         1,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:118
+         0,  # ""
+         1e-1  # ""
+      ]
+      IndVFieldParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:89
+         8.43e-3,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:89
+         1.534e-1,  # ""
+         1.77,  # ""
+         0,  # ""
+         5e-1  # ""
+      ]
+      IndVFieldRespAmp: 1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:45
+      IndVFieldShape: "[0]*(1.0+[3]*tanh(x-[4]))*([4]-x)*exp(-0.5*((x-[4])/[2])^2.0)"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:88
+      IndVFilter: "(x>0.0)*gaus"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:119
+      IndVFilterParams: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:120
+         1,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:120
+         0,  # ""
+         1e-1  # ""
+      ]
+      InputFieldRespSamplingPeriod: 100  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:39
+      Nbit: 12  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:113
+      NoiseFactVec: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:32
+         [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:32
+            1.12,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:32
+            8.6e-1,  # ""
+            6e-1,  # ""
+            5.5e-1  # ""
+         ],
+         [  # ""
+            1.12,  # ""
+            8.6e-1,  # ""
+            6e-1,  # ""
+            5.5e-1  # ""
+         ],
+         [  # ""
+            8.9e-1,  # ""
+            6.6e-1,  # ""
+            4.8e-1,  # ""
+            4.3e-1  # ""
+         ],
+      ]
+      ShapeTimeConst: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:27
+         2,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:27
+         2,  # ""
+         2  # ""
+      ]
+      UseFunctionFieldShape: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:81
+      UseHistogramFieldShape: true  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/signalservices_dune.fcl:82
+   }
+   SpaceCharge: {  # ./example_dataprep_job.fcl:21
+      CalibrationInputFilename: "SpaceChargeProtoDUNE/SCE_DataDriven_180kV_v4.root"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:11
+      EDAXPosOffs: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:16
+         -3,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:16
+         -3  # ""
+      ]
+      EDBZPosOffs: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:17
+         -1,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:17
+         -1  # ""
+      ]
+      EDChargeLossZHigh: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:20
+         233,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:20
+         465  # ""
+      ]
+      EDChargeLossZLow: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:19
+         229,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:19
+         461  # ""
+      ]
+      EDZCenter: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:15
+         231,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:15
+         463  # ""
+      ]
+      EDs: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:18
+         2.5,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:18
+         2.5  # ""
+      ]
+      EnableCalEfieldSCE: false  # /cvmfs/larsoft.opensciencegrid.org/products/larevt/v10_00_18/job/spacecharge.fcl:8
+      EnableCalSpatialSCE: false  # /cvmfs/larsoft.opensciencegrid.org/products/larevt/v10_00_18/job/spacecharge.fcl:7
+      EnableCorrSCE: false  # /cvmfs/larsoft.opensciencegrid.org/products/larevt/v10_00_18/job/spacecharge.fcl:9
+      EnableElectronDiverterDistortions: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:14
+         true,  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:14
+         true  # ""
+      ]
+      EnableSimEfieldSCE: false  # /cvmfs/larsoft.opensciencegrid.org/products/larevt/v10_00_18/job/spacecharge.fcl:6
+      EnableSimSpatialSCE: false  # /cvmfs/larsoft.opensciencegrid.org/products/larevt/v10_00_18/job/spacecharge.fcl:5
+      InputFilename: "SpaceChargeProtoDUNE/SCE_DataDriven_180kV_v4.root"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:10
+      RepresentationType: "Splines_TH3"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:12
+      service_provider: "SpaceChargeServiceProtoDUNE"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunesim/v10_20_03d00/fcl/spacecharge_dune.fcl:13
+   }
+   TFileService: {  # ./example_dataprep_job.fcl:15
+      fileName: "reco_hist.root"  # ./example_dataprep_job.fcl:15
+   }
+   TimeTracker: {  # ./example_dataprep_job.fcl:17
+   }
+   WireReadout: {  # ./example_dataprep_job.fcl:21
+      ChannelsPerOpDet: 1  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:679
+      service_provider: "DUNEWireReadout"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/geometry_dune.fcl:678
+   }
+   message: {  # ./example_dataprep_job.fcl:19
+      debugModules: [  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:42
+         "*"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:42
+      ]
+      destinations: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:43
+         LogDebugFile: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:44
+            append: false  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:15
+            categories: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:50
+               AnaBaseDefaultCtor: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+                  limit: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+               }
+               BackTrackerService: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:70
+                  limit: 0  # ""
+               }
+               CaloPrtHit: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:69
+                  limit: 0  # ""
+               }
+               CaloPrtTrk: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:68
+                  limit: 0  # ""
+               }
+               ChannelFilter: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:60
+                  limit: 0  # ""
+               }
+               ClusterCheater: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:66
+                  limit: 0  # ""
+               }
+               ClusterCrawlerAlg: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:67
+                  limit: 0  # ""
+               }
+               ClusterMergeTQ: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:74
+                  limit: 0  # ""
+               }
+               CosmicTracker: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:73
+                  limit: 0  # ""
+               }
+               DBscan: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:62
+                  limit: 0  # ""
+               }
+               DisambigAlg35t: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:65
+                  limit: 0  # ""
+               }
+               DisambigCheat: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:71
+                  limit: 0  # ""
+               }
+               GeometryBadInputPoint: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:55
+                  limit: 5  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:55
+                  timespan: 1000  # ""
+               }
+               HitCheater: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:64
+                  limit: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+               }
+               HoughBaseAlg: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:61
+                  limit: 0  # ""
+               }
+               KalmanFilterAlg: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:57
+                  limit: 0  # ""
+               }
+               LArPandora: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:75
+                  limit: 0  # ""
+               }
+               RecoBaseDefaultCtor: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:52
+                  limit: 0  # ""
+               }
+               SpacePointAlg: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:56
+                  limit: 0  # ""
+               }
+               Summary: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:72
+                  limit: 0  # ""
+               }
+               Track3DKalmanHit: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:58
+                  limit: 0  # ""
+               }
+               Track3DKalmanSPS_GenFit: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:54
+                  limit: 0  # ""
+               }
+               default: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:51
+               }
+               fuzzyCluster: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:59
+                  limit: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+               }
+            }
+            filename: "debug.log"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:14
+            threshold: "DEBUG"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:16
+            type: "file"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:13
+         }
+         LogStandardError: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:46
+            categories: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:34
+               default: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:35
+               }
+            }
+            threshold: "ERROR"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:33
+            type: "cerr"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:32
+         }
+         LogStandardOut: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:45
+            categories: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:24
+               AnaBaseDefaultCtor: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:27
+                  limit: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+               }
+               GeometryBadInputPoint: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:28
+                  limit: 5  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:55
+                  timespan: 1000  # ""
+               }
+               RecoBaseDefaultCtor: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:26
+                  limit: 0  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:53
+               }
+               default: {  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:25
+               }
+            }
+            threshold: "WARNING"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:23
+            type: "cout"  # /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v10_20_03d00/fcl/messageservices_dune.fcl:22
+         }
+      }
+   }
+}
+source: {  # ./example_dataprep_job.fcl:25
+   maxEvents: -1  # ./example_dataprep_job.fcl:27
+   module_type: "RootInput"  # ./example_dataprep_job.fcl:26
+}

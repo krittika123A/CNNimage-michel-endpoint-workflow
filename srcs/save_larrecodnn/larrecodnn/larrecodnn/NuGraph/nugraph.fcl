@@ -1,0 +1,73 @@
+#include "nugraph_loaders.fcl"
+#include "nugraph_decoders.fcl"
+
+BEGIN_PROLOG
+
+NuGraphCommon: { 
+   minHits: 10
+   debug: false
+   planes: ["u","v","y"]
+   LoaderTool: @local::StandardLoader
+   DecoderTools: {
+       FilterDecoderTool: @local::FilterDecoderTool
+       SemanticDecoderTool: @local::SemanticDecoderTool
+   }
+}
+NuGraphCommon.DecoderTools.FilterDecoderTool.hitInput: @local::NuGraphCommon.LoaderTool.hitInput
+NuGraphCommon.DecoderTools.SemanticDecoderTool.hitInput: @local::NuGraphCommon.LoaderTool.hitInput
+
+TritonConfig: {
+    serverURL: @nil  #"test-1-eaf.fnal.gov:443"
+    verbose: false
+    ssl: true
+    sslRootCertificates: ""
+    sslPrivateKey: ""
+    sslCertificateChain: ""
+    modelName: "nugraph2"
+    modelVersion: ""
+    timeout: 0
+    allowedTries: 1
+    outputs: []
+}
+
+NuGraphLibTorch: {
+   @table::NuGraphCommon
+   avgs_u: [389.00632, 173.42017, 144.42065, 4.5582113]
+   avgs_v: [3.6914261e+02, 1.7347592e+02, 8.5748262e+08, 4.4525051e+00]
+   avgs_y: [547.38995, 173.13017, 109.57691, 4.1024675]
+   devs_u: [148.02893, 78.83508, 223.89404, 2.2621224]
+   devs_v: [1.4524565e+02, 8.1395981e+01, 1.0625440e+13, 1.9223815e+00]
+   devs_y: [284.20657, 74.47823, 108.93791, 1.4318414]
+   pos_norm: [0.3, 0.055]
+   modelFileName: "model.pt"
+   module_type: "NuGraphInference"
+}
+NuGraph: @local::NuGraphLibTorch
+
+NuGraphTriton: { 
+   @table::NuGraphCommon
+   TritonConfig: @local::TritonConfig
+   module_type: "NuGraphInferenceTriton"
+}
+
+CPUNuGraphTriton: @local::NuGraphTriton
+CPUNuGraphTriton.TritonConfig.modelName: "nugraph2_cpu"
+
+ApptainerNuGraphTriton: @local::NuGraphTriton
+ApptainerNuGraphTriton.TritonConfig.serverURL: "localhost:8001"
+ApptainerNuGraphTriton.TritonConfig.ssl: false
+
+NuGraphNuSonicTriton: { 
+   @table::NuGraphCommon
+   TritonConfig: @local::TritonConfig
+   module_type: "NuGraphInferenceSonicTriton"
+}
+
+CPUNuGraphNuSonicTriton: @local::NuGraphNuSonicTriton
+CPUNuGraphNuSonicTriton.TritonConfig.modelName: "nugraph2_cpu"
+
+ApptainerNuGraphNuSonicTriton: @local::NuGraphNuSonicTriton
+ApptainerNuGraphNuSonicTriton.TritonConfig.serverURL: "localhost:8001"
+ApptainerNuGraphNuSonicTriton.TritonConfig.ssl: false
+
+END_PROLOG
