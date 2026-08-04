@@ -1,0 +1,181 @@
+#physics.analyzers.michelEndpointDump: {
+#  module_type: "PointIdTrackEndTrainingData"
+#
+#  # output
+#  DumpToNumpy:    true
+#  DumpToRoot:     false
+#  OutNumpyFileName: "michel_endpoint_patches"
+#
+#  # view selection
+#  SelectedTPC:  [0]
+#  SelectedView: [2]
+#  Crop: false
+#
+#  # patch geometry
+#  Patch_size_w: 44
+#  Patch_size_d: 48
+#
+#  # reco inputs
+#  TrackLabel: "pandoraTrack"   # replace with your actual reco::Track label
+#  MinTrackLength: 10.0
+#
+#  # truth-labelling neighbourhood around endpoint
+#  TruthRadiusW: 6
+#  TruthRadiusD: 6
+#
+#  # dump both ends first; decide later whether to prune
+#  DumpStartPatches: true
+#  DumpEndPatches:   true
+#
+#  TrainingDataAlg: @local::standard_trainingdataalg
+#  TrainingDataAlg.WireLabel: "caldata"
+#  TrainingDataAlg.SimulationLabel: "largeant"
+#  TrainingDataAlg.SimChannelLabel: "largeant"
+#  TrainingDataAlg.SaveVtxFlags: true
+#}
+
+###################################################################################################
+## It starts here ##
+
+#include "services_dune.fcl"
+#include "imagepatternalgs.fcl"
+
+#include "tools_dune.fcl"
+
+process_name: DataDump
+
+services:
+{
+  # Keep the alternate truth-overlap analyzer output separate from the old
+  # analyzer output so validation runs do not replace reco_hist.root.
+  # TFileService: { fileName: "reco_hist.root" }
+  TFileService: { fileName: "reco_hist_truth_overlap.root" }
+
+  MemoryTracker: {}
+  TimeTracker: {}
+  RandomNumberGenerator: {}
+
+  message: @local::dune_message_services_prod_debug
+
+  @table::dunefd_1x2x6_simulation_services
+}
+
+services.Geometry: @local::dune10kt_1x2x6_v5_refactored_geo
+
+source:
+{
+  module_type: RootInput
+  maxEvents: -1
+}
+
+physics:
+{
+  analyzers:
+  {
+    datadump: @local::standard_pointidtrainingdata         ## needs changing
+
+    #datadump:
+    #{
+     # module_type: PointIdPandoraEndpointTrainingData
+    #}
+  }
+
+  anadata: [ datadump ]
+
+  trigger_paths: [ ]
+  end_paths: [ anadata ]
+}
+
+############################################################
+physics.analyzers.datadump.module_type: "PointIdPandoraEndpointTrainingDataTruthOverlap"
+############################################################
+# Existing TrainingDataAlg configuration
+############################################################
+
+physics.analyzers.datadump.TrainingDataAlg.SimulationLabel: "largeant"
+physics.analyzers.datadump.TrainingDataAlg.SimChannelLabel: "tpcrawdecoder:simpleSC"
+
+physics.analyzers.datadump.TrainingDataAlg.SaveVtxFlags: true
+
+physics.analyzers.datadump.TrainingDataAlg.DriftWindow: 6
+physics.analyzers.datadump.EndpointDriftWindow: 6
+physics.analyzers.datadump.TrainingDataAlg.AdcDelayTicks: 0
+physics.analyzers.datadump.TrainingDataAlg.DownscaleFn: "mean"
+
+physics.analyzers.datadump.TrainingDataAlg.CalibrateAmpl: true
+
+physics.analyzers.datadump.TrainingDataAlg.WireLabel: "tpcrawdecoder:wiener"
+
+############################################################
+# Existing detector selection
+############################################################
+
+physics.analyzers.datadump.SelectedTPC: []
+
+#physics.analyzers.datadump.SelectedView: [2]
+physics.analyzers.datadump.SelectedView: []
+
+physics.analyzers.datadump.Crop: true
+
+############################################################
+# Existing output format
+############################################################
+
+physics.analyzers.datadump.OutTextFilePath:
+"/exp/dune/app/users/kadhikar/CNNimage/output"
+
+physics.analyzers.datadump.DumpToRoot: true
+
+# leave FALSE if python still creates patches
+physics.analyzers.datadump.DumpToNumpy: false
+
+physics.analyzers.datadump.OutNumpyFileName: "cnn_output"
+
+############################################################
+# Existing patch settings
+############################################################
+
+physics.analyzers.datadump.Patch_size_w: 44
+physics.analyzers.datadump.Patch_size_d: 48
+
+physics.analyzers.datadump.Em: 1.0
+physics.analyzers.datadump.Trk: 2.0
+physics.analyzers.datadump.Michel: 3.0
+physics.analyzers.datadump.None: 0.0
+
+physics.analyzers.datadump.StopTrk: 4.0
+physics.analyzers.datadump.CleanTrk: 5.0
+
+############################################################
+# NEW Pandora endpoint additions
+############################################################
+
+# reco::Track producer
+physics.analyzers.datadump.PandoraTrackLabel: "pandoraTrack"
+
+# create extra endpoint tree
+physics.analyzers.datadump.SaveEndpointTree: true
+
+# dump both track start and end points
+physics.analyzers.datadump.UseBothEndpoints: true
+
+# reject tiny tracks
+physics.analyzers.datadump.MinTrackLength: 10.0
+
+############################################################
+# Endpoint truth matching
+############################################################
+
+physics.analyzers.datadump.TruthDepositThreshold: 2e-5
+
+physics.analyzers.datadump.TruthCentreRadiusW: 6
+physics.analyzers.datadump.TruthCentreRadiusD: 6
+
+physics.analyzers.datadump.TruthMichelMinPixels: 3
+physics.analyzers.datadump.TruthMuonMinPixels: 5
+
+# Alternate copied analyzer only: CAFMaker-inspired endpoint-local truth-overlap controls.
+# The original analyzer does not read these parameters.
+physics.analyzers.datadump.TruthMichelMinCharge: 0.0
+physics.analyzers.datadump.TruthMichelMinFraction: 0.05
+physics.analyzers.datadump.TruthRequireRecoPrimaryMuonForMichel: false

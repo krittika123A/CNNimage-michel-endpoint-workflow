@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Class:       PointIdPandoraEndpointTrainingData
+// Class:       PointIdPandoraEndpointTrainingDataTruthOverlap
 // Author:      adapted from PointIdTrainingData
 //
 // Additive extension of the original PointIdTrainingData_module.cc.
@@ -100,7 +100,7 @@ namespace {
 
 namespace nnet {
 
-  class PointIdPandoraEndpointTrainingData : public art::EDAnalyzer {
+  class PointIdPandoraEndpointTrainingDataTruthOverlap : public art::EDAnalyzer {
   public:
     struct Config {
       using Name = fhicl::Name;
@@ -243,10 +243,28 @@ namespace nnet {
         Comment("Minimum muon-labelled pixels required near endpoint to consider it a muon end"),
         5
       };
+
+      fhicl::Atom<double> TruthMichelMinCharge{
+        Name("TruthMichelMinCharge"),
+        Comment("Minimum endpoint-local Michel truth charge required for the alternate overlap-style Michel flag"),
+        0.0
+      };
+
+      fhicl::Atom<double> TruthMichelMinFraction{
+        Name("TruthMichelMinFraction"),
+        Comment("Minimum endpoint-local Michel truth-charge fraction required for the alternate overlap-style Michel flag"),
+        0.05
+      };
+
+      fhicl::Atom<bool> TruthRequireRecoPrimaryMuonForMichel{
+        Name("TruthRequireRecoPrimaryMuonForMichel"),
+        Comment("If true, only label Michel endpoints when the reco track is dominantly matched to a primary true muon with Michel decay"),
+        false
+      };
     };
     using Parameters = art::EDAnalyzer::Table<Config>;
 
-    explicit PointIdPandoraEndpointTrainingData(Parameters const& config);
+    explicit PointIdPandoraEndpointTrainingDataTruthOverlap(Parameters const& config);
 
     void beginJob() override;
     void endJob() override;
@@ -340,6 +358,9 @@ namespace nnet {
     int fTruthCentreRadiusD;
     int fTruthMichelMinPixels;
     int fTruthMuonMinPixels;
+    double fTruthMichelMinCharge;
+    double fTruthMichelMinFraction;
+    bool fTruthRequireRecoPrimaryMuonForMichel;
 
     int nEm, nTrk, nMichel, nNone;
     int nEm_sel, nTrk_sel, nMichel_sel, nNone_sel;
@@ -388,14 +409,15 @@ namespace nnet {
     float b_truthTrackCharge{};
     float b_truthShowerCharge{};
     float b_truthMichelCharge{};
+    float b_truthMichelFraction{};
     int b_nHits{};
     float b_startXYZ[3]{};
     float b_endXYZ[3]{};
   };
 
   //-----------------------------------------------------------------------
-  PointIdPandoraEndpointTrainingData::PointIdPandoraEndpointTrainingData(
-    PointIdPandoraEndpointTrainingData::Parameters const& config)
+  PointIdPandoraEndpointTrainingDataTruthOverlap::PointIdPandoraEndpointTrainingDataTruthOverlap(
+    PointIdPandoraEndpointTrainingDataTruthOverlap::Parameters const& config)
     : art::EDAnalyzer(config)
     , fTrainingDataAlg(config().TrainingDataAlg())
     , fPandoraTrackLabel(config().PandoraTrackLabel())
@@ -425,6 +447,9 @@ namespace nnet {
     , fTruthCentreRadiusD(config().TruthCentreRadiusD())
     , fTruthMichelMinPixels(config().TruthMichelMinPixels())
     , fTruthMuonMinPixels(config().TruthMuonMinPixels())
+    , fTruthMichelMinCharge(config().TruthMichelMinCharge())
+    , fTruthMichelMinFraction(config().TruthMichelMinFraction())
+    , fTruthRequireRecoPrimaryMuonForMichel(config().TruthRequireRecoPrimaryMuonForMichel())
     , fEngine(art::ServiceHandle<rndm::NuRandomService>()->registerAndSeedEngine(createEngine(0)))
   {
     if (fSimChannelLabel.label().empty()) fSimChannelLabel = fSimulationLabel;
@@ -444,7 +469,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  void PointIdPandoraEndpointTrainingData::beginJob()
+  void PointIdPandoraEndpointTrainingDataTruthOverlap::beginJob()
   {
     if (fDumpToNumpy) {
       c2numpy_init(&npywriter, fOutNumpyFileName, 50000);
@@ -531,6 +556,7 @@ namespace nnet {
       fEndpointTree->Branch("truth_track_charge", &b_truthTrackCharge, "truth_track_charge/F");
       fEndpointTree->Branch("truth_shower_charge", &b_truthShowerCharge, "truth_shower_charge/F");
       fEndpointTree->Branch("truth_michel_charge", &b_truthMichelCharge, "truth_michel_charge/F");
+      fEndpointTree->Branch("truth_michel_fraction", &b_truthMichelFraction, "truth_michel_fraction/F");
 
       fEndpointTree->Branch("n_associated_hits", &b_nHits, "n_associated_hits/I");
       fEndpointTree->Branch("start_xyz", b_startXYZ, "start_xyz[3]/F");
@@ -539,7 +565,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  void PointIdPandoraEndpointTrainingData::endJob()
+  void PointIdPandoraEndpointTrainingDataTruthOverlap::endJob()
   {
     std::cout << "nEm = " << nEm << std::endl;
     std::cout << "nTrk = " << nTrk << std::endl;
@@ -557,7 +583,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  DominantTPCInfo PointIdPandoraEndpointTrainingData::dominantTPC(
+  DominantTPCInfo PointIdPandoraEndpointTrainingDataTruthOverlap::dominantTPC(
     std::vector<art::Ptr<recob::Hit>> const& hits) const
   {
     DominantTPCInfo info;
@@ -581,7 +607,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  bool PointIdPandoraEndpointTrainingData::projectEndpoint(
+  bool PointIdPandoraEndpointTrainingDataTruthOverlap::projectEndpoint(
     recob::Track const& trk,
     int endpoint,
     int cryo,
@@ -625,7 +651,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  void PointIdPandoraEndpointTrainingData::evaluateEndpointTruth(
+  void PointIdPandoraEndpointTrainingDataTruthOverlap::evaluateEndpointTruth(
     float wireAbs,
     float tickAbs,
     int& nMichel,
@@ -670,7 +696,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  bool PointIdPandoraEndpointTrainingData::isMuonDecayAncestor(
+  bool PointIdPandoraEndpointTrainingDataTruthOverlap::isMuonDecayAncestor(
     simb::MCParticle const& particle,
     std::unordered_map<int, simb::MCParticle const*> const& particleMap) const
   {
@@ -694,7 +720,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  bool PointIdPandoraEndpointTrainingData::isMichelElectronFromAncestry(
+  bool PointIdPandoraEndpointTrainingDataTruthOverlap::isMichelElectronFromAncestry(
     simb::MCParticle const& particle,
     std::unordered_map<int, simb::MCParticle const*> const& particleMap,
     int& muonTrackId,
@@ -724,7 +750,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  RecoTrackAncestryTruth PointIdPandoraEndpointTrainingData::evaluateRecoTrackAncestryTruth(
+  RecoTrackAncestryTruth PointIdPandoraEndpointTrainingDataTruthOverlap::evaluateRecoTrackAncestryTruth(
     std::vector<art::Ptr<recob::Hit>> const& hits,
     std::vector<sim::SimChannel> const& simChannels,
     std::unordered_map<int, simb::MCParticle const*> const& particleMap,
@@ -778,7 +804,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  EndpointAncestryTruth PointIdPandoraEndpointTrainingData::evaluateEndpointAncestryTruth(
+  EndpointAncestryTruth PointIdPandoraEndpointTrainingDataTruthOverlap::evaluateEndpointAncestryTruth(
     int cryo,
     int tpc,
     int plane,
@@ -858,8 +884,8 @@ namespace nnet {
           if (requiredMuonTrackId != 0) {
             if (originalTrackId < 0) {
               // Negative SimChannel TrackIDs represent EM activity assigned to a mother.
-              // Count it as Michel only if that mother is the same true muon matched to
-              // this reconstructed Pandora track.
+              // Strict mode counts it as Michel only if that mother is the same true
+              // muon matched to this reconstructed Pandora track.
               if (particle.TrackId() == requiredMuonTrackId && isMuonDecayAncestor(particle, particleMap)) {
                 isMichelDeposit = true;
                 muonTrackId = particle.TrackId();
@@ -869,6 +895,22 @@ namespace nnet {
             else {
               isMichelDeposit = isMichelElectronFromAncestry(particle, particleMap, muonTrackId, muonPdg) &&
                                 (muonTrackId == requiredMuonTrackId);
+            }
+          }
+          else {
+            // Alternate overlap-style mode: do not require the whole reco track to be
+            // dominantly matched to the decaying muon. Count endpoint-local Michel
+            // truth charge if the SimChannel contributor itself has muon-decay ancestry.
+            // The old strict same-muon requirement above is left intact for comparison.
+            if (originalTrackId < 0) {
+              if (isMuonDecayAncestor(particle, particleMap)) {
+                isMichelDeposit = true;
+                muonTrackId = particle.TrackId();
+                muonPdg = particle.PdgCode();
+              }
+            }
+            else {
+              isMichelDeposit = isMichelElectronFromAncestry(particle, particleMap, muonTrackId, muonPdg);
             }
           }
 
@@ -892,7 +934,7 @@ namespace nnet {
   }
 
   //-----------------------------------------------------------------------
-  void PointIdPandoraEndpointTrainingData::analyze(const art::Event& event)
+  void PointIdPandoraEndpointTrainingDataTruthOverlap::analyze(const art::Event& event)
   {
     int const eventNumber = event.id().event();
     int const runNumber = event.run();
@@ -941,26 +983,26 @@ namespace nnet {
           int const currentTPC = fSelectedTPC[i];
           int const currentPlane = fSelectedPlane[v];
           int const currentCryo = 0; // matches original PointIdTrainingData usage
-    
-    // for (unsigned int currentCryo = 0; 
-    //     currentCryo < geom.Ncryostats(); 
-    //     ++currentCryo) 
+
+    // for (unsigned int currentCryo = 0;
+    //     currentCryo < geom.Ncryostats();
+    //     ++currentCryo)
     //   {
-    //     for (unsigned int currentTPC = 0; 
-    //       currentTPC < geom.NTPC(currentCryo); 
-    //       ++currentTPC) 
+    //     for (unsigned int currentTPC = 0;
+    //       currentTPC < geom.NTPC(currentCryo);
+    //       ++currentTPC)
     //       {
-    //         for (unsigned int currentPlane = 0; 
-    //              currentPlane < wireReadoutGeom.Nplanes(); 
-    //              ++currentPlane) 
+    //         for (unsigned int currentPlane = 0;
+    //              currentPlane < wireReadoutGeom.Nplanes();
+    //              ++currentPlane)
     //             {
-              
+
                   // Debug: print current cryostat, TPC, plane
                   std::cout << "CRYO=" << currentCryo
                             << " TPC=" << currentTPC
                             << " PLANE=" << currentPlane
                             << std::endl;
-                
+
                             fTrainingDataAlg.setEventData(
                               event, clockData, detProp, currentPlane, currentTPC, currentCryo);
 
@@ -985,6 +1027,7 @@ namespace nnet {
           TH2F* depHist = nullptr;
           TH2I* pdgHist = nullptr;
 
+
           // ------------------------------------------------------------------
           // ORIGINAL ROOT DUMP PATH: KEPT INTACT
           // ------------------------------------------------------------------
@@ -993,8 +1036,13 @@ namespace nnet {
             ss1 << "raw_" << os.str() << "_tpc_" << currentTPC << "_view_" << currentPlane;
 
             art::ServiceHandle<art::TFileService const> tfs;
+            // Histogram pointers are declared outside this block so validation
+            // endpoint markers can be attached before the histograms are written.
+            // TH2F* rawHist =
             rawHist =
               tfs->make<TH2F>((ss1.str() + "_raw").c_str(), "ADC", w1 - w0, w0, w1, d1 - d0, d0, d1);
+            // TH2F* depHist = nullptr;
+            // TH2I* pdgHist = nullptr;
 
             if (saveSim) {
               depHist = tfs->make<TH2F>((ss1.str() + "_deposit").c_str(),
@@ -1028,11 +1076,100 @@ namespace nnet {
               }
             }
 
-            // Validation endpoint markers are attached after the endpoint loop below,
-            // so keep the ROOT histograms open until this TPC/view block is finished.
-            // writeAndDelete(rawHist);
-            // writeAndDelete(depHist);
-            // writeAndDelete(pdgHist);
+            if (rawHist && currentPlane == 2 && fSaveEndpointTree) {
+              // Validation-only overlay for the alternate truth module: attach
+              // projected Pandora start/end markers before the ROOT histogram is
+              // written. This keeps the ADC bin contents intact, unlike the earlier
+              // delayed-write marker attempt that produced empty raw histograms.
+              for (size_t markerTrack = 0; markerTrack < trackHandle->size(); ++markerTrack) {
+                auto const& markerTrk = trackHandle->at(markerTrack);
+                if (markerTrk.Length() < fMinTrackLength) continue;
+
+                auto const markerHits = trackHitAssoc.at(markerTrack);
+                DominantTPCInfo const markerDomTPC = dominantTPC(markerHits);
+                if (!markerDomTPC.valid) continue;
+                if (markerDomTPC.cryo != currentCryo) continue;
+                if (markerDomTPC.tpc != currentTPC) continue;
+
+                RecoTrackAncestryTruth markerRecoTruth;
+                if (saveSim && simChannels) {
+                  markerRecoTruth =
+                    evaluateRecoTrackAncestryTruth(markerHits, *simChannels, particleMap, truthChargeScale);
+                }
+
+                int const markerEndpointFirst = fUseBothEndpoints ? 0 : 1;
+                int const markerEndpointLast = 1;
+                for (int markerEndpoint = markerEndpointFirst; markerEndpoint <= markerEndpointLast; ++markerEndpoint) {
+                  float markerXYZ[3] = {0.F, 0.F, 0.F};
+                  float markerWireAbs = 0.F;
+                  float markerTickAbs = 0.F;
+                  if (!projectEndpoint(markerTrk,
+                                       markerEndpoint,
+                                       currentCryo,
+                                       currentTPC,
+                                       currentPlane,
+                                       detProp,
+                                       wireReadoutGeom,
+                                       markerWireAbs,
+                                       markerTickAbs,
+                                       markerXYZ)) {
+                    continue;
+                  }
+
+                  int markerPlaneWireOffset = 0;
+                  for (int p = 0; p < currentPlane; ++p) {
+                    geo::PlaneID prevID{static_cast<unsigned int>(currentCryo),
+                                        static_cast<unsigned int>(currentTPC),
+                                        static_cast<unsigned int>(p)};
+                    markerPlaneWireOffset += wireReadoutGeom.Plane(prevID).Nwires();
+                  }
+                  float const markerWireLocal = markerWireAbs - static_cast<float>(markerPlaneWireOffset);
+
+                  EndpointAncestryTruth markerAncestryTruth;
+                  if (saveSim && simChannels) {
+                    int const markerRequiredMuonTrackId =
+                      (fTruthRequireRecoPrimaryMuonForMichel && markerEndpoint == 1 &&
+                       markerRecoTruth.isPrimaryMuon && markerRecoTruth.hasMichelDecay)
+                        ? markerRecoTruth.dominantTrackId
+                        : 0;
+
+                    markerAncestryTruth = evaluateEndpointAncestryTruth(currentCryo,
+                                                                        currentTPC,
+                                                                        currentPlane,
+                                                                        markerWireLocal,
+                                                                        markerTickAbs,
+                                                                        markerRequiredMuonTrackId,
+                                                                        clockData,
+                                                                        wireReadoutGeom,
+                                                                        *simChannels,
+                                                                        particleMap,
+                                                                        truthChargeScale);
+                  }
+
+                  double const markerMichelFraction =
+                    (markerAncestryTruth.totalCharge > 0.0)
+                      ? markerAncestryTruth.michelCharge / markerAncestryTruth.totalCharge
+                      : 0.0;
+                  bool const markerHasMichelAncestry =
+                    saveSim && markerEndpoint == 1 && markerAncestryTruth.hasMichelDecay &&
+                    markerAncestryTruth.michelCharge >= fTruthMichelMinCharge &&
+                    markerMichelFraction >= fTruthMichelMinFraction;
+
+                  TMarker* endpointMarker =
+                    new TMarker(markerWireLocal, markerTickAbs, markerEndpoint == 1 ? 29 : 30);
+                  endpointMarker->SetMarkerColor(markerHasMichelAncestry ? 2 : (markerEndpoint == 1 ? 4 : 8));
+                  endpointMarker->SetMarkerSize(markerHasMichelAncestry ? 5.0 : 4.0);
+                  rawHist->GetListOfFunctions()->Add(endpointMarker);
+                }
+              }
+            }
+
+            // Restore the original ROOT dump behavior in this alternate truth module:
+            // write raw/deposit/pdg histograms immediately after filling them and
+            // after any validation markers have been attached.
+            writeAndDelete(rawHist);
+            writeAndDelete(depHist);
+            writeAndDelete(pdgHist);
           }
 
           // ------------------------------------------------------------------
@@ -1218,7 +1355,8 @@ namespace nnet {
           // ------------------------------------------------------------------
           // NEW ADDITIVE PANDORA ENDPOINT TREE
           // ------------------------------------------------------------------
-          if (fSaveEndpointTree) {
+          if (!fSaveEndpointTree) continue;
+
           for (size_t iTrack = 0; iTrack < trackHandle->size(); ++iTrack) {
             auto const& trk = trackHandle->at(iTrack);
             if (trk.Length() < fMinTrackLength) continue;
@@ -1279,8 +1417,16 @@ namespace nnet {
                 evaluateEndpointTruth(endpointWireLocal, tickAbs, nMichelPix, nMuonPix, nTrackPix, nShowerPix);
 
                 if (simChannels) {
+                  // Original strict call used the reco-track dominant primary muon as a gate:
+                  // int const requiredMuonTrackId =
+                  //   (endpoint == 1 && recoTrackTruth.isPrimaryMuon && recoTrackTruth.hasMichelDecay)
+                  //     ? recoTrackTruth.dominantTrackId
+                  //     : 0;
+                  // The copied module can run either that strict mode or an endpoint-local
+                  // overlap-style mode controlled by TruthRequireRecoPrimaryMuonForMichel.
                   int const requiredMuonTrackId =
-                    (endpoint == 1 && recoTrackTruth.isPrimaryMuon && recoTrackTruth.hasMichelDecay)
+                    (fTruthRequireRecoPrimaryMuonForMichel && endpoint == 1 &&
+                     recoTrackTruth.isPrimaryMuon && recoTrackTruth.hasMichelDecay)
                       ? recoTrackTruth.dominantTrackId
                       : 0;
 
@@ -1341,7 +1487,19 @@ namespace nnet {
                   ? 1
                   : 0;
 
-              b_truthHasMichelAncestry = ancestryTruth.hasMichelDecay;
+              double const truthMichelFraction =
+                (ancestryTruth.totalCharge > 0.0) ? ancestryTruth.michelCharge / ancestryTruth.totalCharge : 0.0;
+
+              // Original copied logic directly stored the hard ancestry flag:
+              // b_truthHasMichelAncestry = ancestryTruth.hasMichelDecay;
+              // Alternate overlap-style logic requires endpoint-local Michel charge and
+              // Michel charge fraction, and only labels the physical track end.
+              b_truthHasMichelAncestry =
+                (saveSim && endpoint == 1 && ancestryTruth.hasMichelDecay &&
+                 ancestryTruth.michelCharge >= fTruthMichelMinCharge &&
+                 truthMichelFraction >= fTruthMichelMinFraction)
+                  ? 1
+                  : 0;
               b_truthRecoTrackId = recoTrackTruth.dominantTrackId;
               b_truthRecoTrackPdg = recoTrackTruth.dominantPdg;
               b_truthRecoTrackMotherPdg = recoTrackTruth.dominantMotherPdg;
@@ -1355,33 +1513,32 @@ namespace nnet {
               b_truthTrackCharge = static_cast<float>(ancestryTruth.trackCharge);
               b_truthShowerCharge = static_cast<float>(ancestryTruth.showerCharge);
               b_truthMichelCharge = static_cast<float>(ancestryTruth.michelCharge);
-
-              if (rawHist && currentPlane == 2) {
-                // Validation-only overlay: mark projected Pandora track endpoints on
-                // collection-plane ADC TH2s using the same wire/tick coordinates
-                // written to the endpoint tree; this does not change bin contents,
-                // patch production, or truth labelling.
-                TMarker* endpointMarker = new TMarker(endpointWireLocal, tickAbs, endpoint == 1 ? 29 : 30);
-                endpointMarker->SetMarkerColor(b_truthHasMichelAncestry ? 2 : (endpoint == 1 ? 4 : 8));
-                // The original small overlay size was hard to see on full-event
-                // wire/tick displays, especially for large cropped event views.
-                // endpointMarker->SetMarkerSize(b_truthHasMichelAncestry ? 1.6 : 1.2);
-                endpointMarker->SetMarkerSize(b_truthHasMichelAncestry ? 5.0 : 4.0);
-                rawHist->GetListOfFunctions()->Add(endpointMarker);
-              }
+              b_truthMichelFraction = static_cast<float>(truthMichelFraction);
 
               b_nHits = static_cast<int>(hits.size());
+
+              // Marker overlay is now attached in the ROOT histogram block before
+              // writeAndDelete(rawHist). Keeping this old in-tree location disabled
+              // avoids delaying histogram writes, which previously produced empty
+              // raw ADC histograms in the alternate output.
+              // if (rawHist && currentPlane == 2) {
+              //   TMarker* endpointMarker = new TMarker(endpointWireLocal, tickAbs, endpoint == 1 ? 29 : 30);
+              //   endpointMarker->SetMarkerColor(b_truthHasMichelAncestry ? 2 : (endpoint == 1 ? 4 : 8));
+              //   endpointMarker->SetMarkerSize(b_truthHasMichelAncestry ? 5.0 : 4.0);
+              //   rawHist->GetListOfFunctions()->Add(endpointMarker);
+              // }
 
               fEndpointTree->Fill();
             }
           }
-          }
 
-          if (fDumpToRoot) {
-            writeAndDelete(rawHist);
-            writeAndDelete(depHist);
-            writeAndDelete(pdgHist);
-          }
+          // Histograms are written immediately after the ROOT dump block above.
+          // The delayed write was only needed for disabled TMarker overlays.
+          // if (fDumpToRoot) {
+          //   writeAndDelete(rawHist);
+          //   writeAndDelete(depHist);
+          //   writeAndDelete(pdgHist);
+          // }
 
         } // plane loop
       }   // tpc loop
@@ -1389,7 +1546,7 @@ namespace nnet {
   }     // analyze()
 
   //-----------------------------------------------------------------------
-  int PointIdPandoraEndpointTrainingData::WeightedFit(int n,
+  int PointIdPandoraEndpointTrainingDataTruthOverlap::WeightedFit(int n,
                                                       std::vector<double> const& x,
                                                       std::vector<double> const& y,
                                                       std::vector<double> const& w,
@@ -1429,6 +1586,6 @@ namespace nnet {
     return 0;
   }
 
-  DEFINE_ART_MODULE(PointIdPandoraEndpointTrainingData)
+  DEFINE_ART_MODULE(PointIdPandoraEndpointTrainingDataTruthOverlap)
 
 } // namespace nnet
