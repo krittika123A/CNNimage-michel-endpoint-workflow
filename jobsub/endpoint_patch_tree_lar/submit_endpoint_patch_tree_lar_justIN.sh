@@ -29,6 +29,10 @@ DATASET=${DATASET:-"fardet-hd:fardet-hd__full-reconstructed__v09_85_00d00__reco2
 NUM_FILES=${NUM_FILES:-8000}
 SKIP_FILES=${SKIP_FILES:-0}
 WORKFLOW_NAME=${WORKFLOW_NAME:-cnnimage-endpoint-patch-tree-lar-${NUM_FILES}}
+SITE=${SITE:-FNAL}
+MAX_DISTANCE=${MAX_DISTANCE:-30}
+RSS_MB=${RSS_MB:-2000}
+WALL_SECONDS=${WALL_SECONDS:-7200}
 
 if [ "$SKIP_FILES" = "0" ] ; then
   MQL_QUERY="files from $DATASET limit $NUM_FILES ordered"
@@ -43,14 +47,24 @@ echo "[submit_endpoint_patch_tree_lar] Analyzer/FCL: PointIdPandoraEndpointPatch
 echo "[submit_endpoint_patch_tree_lar] Expected output per job: endpoint_patch_tree_<input_reco2_basename>.root"
 echo "[submit_endpoint_patch_tree_lar] Scratch output destination: $FNALURL/$USERF/$DIR"
 echo "[submit_endpoint_patch_tree_lar] MQL query: $MQL_QUERY"
+echo "[submit_endpoint_patch_tree_lar] Site constraint: ${SITE:-<none>}"
+echo "[submit_endpoint_patch_tree_lar] Max distance: $MAX_DISTANCE"
+echo "[submit_endpoint_patch_tree_lar] RSS MB: $RSS_MB"
+echo "[submit_endpoint_patch_tree_lar] Wall seconds: $WALL_SECONDS"
+
+site_option=()
+if [ "$SITE" != "" ] ; then
+  site_option=(--site "$SITE")
+fi
 
 justin simple-workflow \
   --name "$WORKFLOW_NAME" \
   --mql "$MQL_QUERY" \
   --jobscript jobscript_endpoint_patch_tree_lar.jobscript \
   --env INPUT_TAR_DIR_LOCAL="$INPUT_TAR_DIR_LOCAL" \
-  --rss-mb 2000 \
-  --wall-seconds 7200 \
-  --max-distance 30 \
+  --rss-mb "$RSS_MB" \
+  --wall-seconds "$WALL_SECONDS" \
+  --max-distance "$MAX_DISTANCE" \
+  "${site_option[@]}" \
   --output-pattern "*endpoint_patch_tree*.root:$FNALURL/$USERF/$DIR" \
   --output-pattern "*.logs.tgz:$FNALURL/$USERF/$DIR"
