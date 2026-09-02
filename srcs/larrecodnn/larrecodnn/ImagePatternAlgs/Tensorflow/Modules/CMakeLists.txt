@@ -143,6 +143,25 @@ cet_build_plugin(PointIdPandoraEndpointPatchTree art::EDAnalyzer
   ROOT::Tree
 )
 
+cet_build_plugin(PointIdPandoraEndpointHitPatchTree art::EDAnalyzer
+  LIBRARIES PRIVATE
+  larrecodnn::ImagePatternAlgs_Tensorflow_PointIdAlg
+  lardata::DetectorClocksService
+  lardata::DetectorPropertiesService
+  larcore::Geometry_Geometry_service
+  larcorealg::Geometry
+  nurandom::RandomUtils_NuRandomService_service
+  art_root_io::TFileService_service
+  art::Framework_Services_Registry
+  canvas::canvas
+  messagefacility::MF_MessageLogger
+  fhiclcpp::types
+  fhiclcpp::fhiclcpp
+  CLHEP::Random
+  ROOT::Hist
+  ROOT::Tree
+)
+
 install_headers()
 install_fhicl()
 install_source()
