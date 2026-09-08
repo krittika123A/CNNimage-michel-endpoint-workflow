@@ -1,0 +1,68 @@
+#include "services_dune.fcl"
+#include "tools_dune.fcl"
+
+process_name: DataDump
+
+services:
+{
+  TFileService: { fileName: "reco_ivysaurus_muon_endpoint_training.root" }
+
+  MemoryTracker: {}
+  TimeTracker: {}
+  RandomNumberGenerator: {}
+
+  message: @local::dune_message_services_prod_debug
+
+  @table::dunefd_1x2x6_simulation_services
+}
+
+services.Geometry: @local::dune10kt_1x2x6_v5_refactored_geo
+
+source:
+{
+  module_type: RootInput
+  maxEvents: -1
+}
+
+physics:
+{
+  analyzers:
+  {
+    datadump:
+    {
+      module_type: "PointIdPandoraIvysaurusMuonEndpointTraining"
+
+      PandoraPfoLabel: "pandora"
+      PandoraTrackLabel: "pandoraTrack"
+      TrackHitAssocLabel: "pandoraTrack"
+      HitLabel: "hitfd"
+      ParticleLabel: "largeant"
+      SimChannelLabel: "tpcrawdecoder:simpleSC"
+
+      MinTrackLength: 10.0
+      GridWires: 48
+      GridDrifts: 48
+      DriftBinWidth: 6
+      MinHitIntegral: 0.0
+      MinMichelHits: 1
+      MinMichelFraction: 0.05
+
+      # Full-event displays are disabled; endpoint-centred CNN patch histograms are written instead.
+      # SaveEventDisplays: true
+      # SaveEventTruth: true
+      SaveEventDisplays: false
+      SaveEventTruth: false
+      SaveEndpointPatchHists: true
+      SaveEndpointPatchTruth: true
+      SelectedTPC: []
+      SelectedView: [0, 1, 2]
+      EventDisplayWireMargin: 10
+      EventDisplayDriftMargin: 10
+    }
+  }
+
+  anadata: [ datadump ]
+
+  trigger_paths: [ ]
+  end_paths: [ anadata ]
+}
