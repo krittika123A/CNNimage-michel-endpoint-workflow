@@ -84,25 +84,6 @@ cet_build_plugin(PointIdTrainingData art::EDAnalyzer
   ROOT::Hist
 )
 
-
-cet_build_plugin(PointIdPandoraIvysaurusMuonEndpointTraining art::EDAnalyzer
-  LIBRARIES PRIVATE
-  larsim::Utils
-  lardata::DetectorClocksService
-  lardata::DetectorPropertiesService
-  larcore::Geometry_Geometry_service
-  larcorealg::Geometry
-  lardataobj::RecoBase
-  lardataobj::Simulation
-  nusimdata::SimulationBase
-  art_root_io::TFileService_service
-  art::Framework_Services_Registry
-  canvas::canvas
-  messagefacility::MF_MessageLogger
-  fhiclcpp::types
-  fhiclcpp::fhiclcpp
-  ROOT::Tree
-)
 install_headers()
 install_fhicl()
 install_source()
