@@ -182,6 +182,44 @@ cet_build_plugin(PointIdPandoraIvysaurusMuonEndpointTraining art::EDAnalyzer
   fhiclcpp::fhiclcpp
   ROOT::Tree
 )
+cet_build_plugin(PointIdPandoraIvysaurusMuonEndpointTrainingProcessMuon art::EDAnalyzer
+  LIBRARIES PRIVATE
+  larsim::Utils
+  lardata::DetectorClocksService
+  lardata::DetectorPropertiesService
+  larcore::Geometry_Geometry_service
+  larcorealg::Geometry
+  lardataobj::RecoBase
+  lardataobj::Simulation
+  nusimdata::SimulationBase
+  art_root_io::TFileService_service
+  art::Framework_Services_Registry
+  canvas::canvas
+  messagefacility::MF_MessageLogger
+  fhiclcpp::types
+  fhiclcpp::fhiclcpp
+  ROOT::Tree
+)
+
+cet_build_plugin(PointIdSimpleGeantProcessTruth art::EDAnalyzer
+  LIBRARIES PRIVATE
+  lardata::DetectorClocksService
+  lardata::DetectorPropertiesService
+  larcore::Geometry_Geometry_service
+  larcorealg::Geometry
+  lardataobj::RecoBase
+  lardataobj::Simulation
+  larsim::MCCheater_ParticleInventoryService_service
+  nusimdata::SimulationBase
+  art_root_io::TFileService_service
+  art::Framework_Services_Registry
+  canvas::canvas
+  fhiclcpp::types
+  fhiclcpp::fhiclcpp
+  cetlib_except::cetlib_except
+  ROOT::Hist
+  ROOT::Tree
+)
 install_headers()
 install_fhicl()
 install_source()

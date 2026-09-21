@@ -1,0 +1,77 @@
+#include "services_dune.fcl"
+#include "tools_dune.fcl"
+
+process_name: SimpleGeantProcessTruth
+
+services:
+{
+  TFileService: { fileName: "reco_simple_geant_process_truth.root" }
+
+  MemoryTracker: {}
+  TimeTracker: {}
+  RandomNumberGenerator: {}
+
+  message: @local::dune_message_services_prod_debug
+
+  @table::dunefd_1x2x6_simulation_services
+}
+
+services.Geometry: @local::dune10kt_1x2x6_v5_refactored_geo
+
+source:
+{
+  module_type: RootInput
+  maxEvents: -1
+}
+
+physics:
+{
+  analyzers:
+  {
+    simpleGeantTruth:
+    {
+      module_type: "PointIdSimpleGeantProcessTruth"
+
+      # Pandora supplies only reconstructed track candidates and extrema.
+      # No Pandora product is used to assign truth.
+      PandoraPfoLabel: "pandora"
+      PandoraTrackLabel: "pandoraTrack"
+      TrackHitAssocLabel: "pandoraTrack"
+      HitLabel: "hitfd"
+
+      # Direct detector-simulation products used for truth matching.
+      ParticleLabel: "largeant"
+      SimChannelLabel: "tpcrawdecoder:simpleSC"
+      MichelElectronProcesses: ["Decay", "DecayWithSpin"]
+      MichelMuonEndProcesses: ["Decay", "DecayWithSpin"]
+      PrimaryMuonProcesses: ["primary"]
+      HitTimeWindowRMS: 1.0
+      # Require the GEANT primary-muon start to agree with the GENIE neutrino vertex.
+      MCTruthVertexTolerance: 1.0
+
+      # Every track-like Pandora PFP is considered; there is no PDG/muon filter.
+      MinTrackLength: 10.0
+      RequireContainedTrack: true
+      # Both track extrema must be at least 20 cm inside every X/Y/Z active-volume face.
+      ContainmentMargin: 20.0
+      SelectedTPC: []
+
+      # Only W-plane charge images are stored. U/V/W hits all contribute to StartLabel/EndLabel.
+      GridWires: 48
+      GridDrifts: 48
+      DriftBinWidth: 6
+      MinHitIntegral: 0.0
+
+      # Preserve raw hit->Integral() values. A single global scale does not change disparity.
+      ChargeScale: 1.0
+
+      SaveEndpointPatchHists: true
+      SaveEndpointPatchTruth: true
+    }
+  }
+
+  anadata: [ simpleGeantTruth ]
+
+  trigger_paths: [ ]
+  end_paths: [ anadata ]
+}
